@@ -12,8 +12,6 @@ build/
 GeneratedPluginRegistrant.h
 GeneratedPluginRegistrant.m
 
-.generated/
-
 *.pbxuser
 *.mode1v3
 *.mode2v3
@@ -35,7 +33,6 @@ Icon?
 
 /Flutter/app.flx
 /Flutter/app.zip
-/Flutter/flutter_assets/
 /Flutter/App.framework
 /Flutter/Flutter.framework
 /Flutter/Generated.xcconfig

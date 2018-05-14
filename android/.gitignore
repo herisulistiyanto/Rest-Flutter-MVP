@@ -2,9 +2,18 @@
 *.class
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
+/.idea
 .DS_Store
 /build
 /captures
 GeneratedPluginRegistrant.java
+*.dex
+*.apk
+*.ap_
+.externalNativeBuild
+bin/
+gen/
+out/
+*.log
+.navigation/
+# *.jks

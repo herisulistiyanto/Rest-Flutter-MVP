@@ -1,9 +1,10 @@
+import 'package:example_flutter/data/FetchDataException.dart';
 import 'package:example_flutter/data/HotelData.dart';
 import 'package:example_flutter/deps/di.dart';
 
 abstract class HotelListViewContract {
   void onSuccess(List<Hotel> items);
-  void onError();
+  void onError(FetchDataException e);
 }
 
 class HotelPresenter {
@@ -18,6 +19,6 @@ class HotelPresenter {
     _repository
         .fetchHotels()
         .then((data) => _view.onSuccess(data))
-        .catchError((onError) => _view.onError());
+        .catchError((e) => _view.onError(new FetchDataException(e.toString())));
   }
 }

@@ -1,3 +1,4 @@
+import 'package:example_flutter/data/FetchDataException.dart';
 import 'package:example_flutter/data/HotelData.dart';
 import 'package:example_flutter/deps/modules/HotelPresenter.dart';
 import 'package:flutter/foundation.dart';
@@ -42,38 +43,62 @@ class _HomePageState extends State<HomePage> implements HotelListViewContract {
 
   Widget _hotelWidget() {
     return new Container(
+      child: new Padding(
+        padding: EdgeInsets.all(8.0),
+        child: new Column(
+          children: <Widget>[
+            new Flexible(
+              child: new ListView.builder(
+                itemCount: _hotels.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final Hotel hotel = _hotels[index];
+                  return _getCardItemUi(context, hotel);
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getCardItemUi(BuildContext context, Hotel hotel) {
+    return new Card(
       child: new Column(
         children: <Widget>[
-          new Flexible(
-            child: new ListView.builder(
-              itemCount: _hotels.length,
-              itemBuilder: (BuildContext context, int index) {
-                final Hotel hotel = _hotels[index];
-                return _getListItemUi(hotel);
-              },
+          new ListTile(
+            title: new Padding(
+              padding: EdgeInsets.only(top: 8.0),
+              child: new CachedNetworkImage(
+                imageUrl: hotel.background,
+                placeholder: new CircularProgressIndicator(),
+                errorWidget: new Center(child: new Icon(Icons.error)),
+              ),
             ),
+            subtitle: new Padding(
+                padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+                child: new Text(
+                  hotel.name,
+                  style: new TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.0,
+                  ),
+                )),
+            isThreeLine: true,
+            onTap: () {
+              final snackBar =
+                  new SnackBar(content: new Text("Tap : ${hotel.name}"));
+              Scaffold.of(context).showSnackBar(snackBar);
+            },
           )
         ],
       ),
     );
   }
 
-  ListTile _getListItemUi(Hotel hotel) {
-    return new ListTile(
-      title: new CachedNetworkImage(
-        imageUrl: hotel.background,
-        placeholder: new CircularProgressIndicator(),
-        errorWidget: new Center(child: new Icon(Icons.error)),
-      ),
-      subtitle: new Text(hotel.name),
-      isThreeLine: true,
-    );
-  }
-
   @override
-  void onError() {
-    //TODO
-    print('ERROR CUK');
+  void onError(FetchDataException e) {
+    print(e.toString());
   }
 
   @override
